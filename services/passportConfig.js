@@ -26,12 +26,16 @@ passport.use(
       try {
         let foundUser = await User.findOne({ googleId: profile.id });
         if (!foundUser) {
-          let newUser = await User.create({ googleId: profile.id });
-          done(null, newUser);
+          let user = await User.create({ googleId: profile.id });
+          done(null, user);
         } else {
           done(null, foundUser);
         }
-      } catch {}
+      } catch (error) {
+        if (error.code === 11000) {
+          error.errmsg = "Sorry, that Username/Email is already taken";
+        }
+      }
     }
   )
 );

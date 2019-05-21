@@ -1,7 +1,7 @@
 const express = require("express");
 const port = process.env.PORT || 5000;
-require("./models");
-require("./services/passportConfig");
+const db = require("./models");
+const passportConfig = require("./services/passportConfig");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const authRoutes = require("./routes/authRoutes");
@@ -10,7 +10,7 @@ const app = express();
 
 app.use(
   cookieSession({
-    maxAge: 30 * 24 * 60 * 60 * 1000,
+    maxAge: 5000,
     keys: [cookieKeys]
   })
 );
